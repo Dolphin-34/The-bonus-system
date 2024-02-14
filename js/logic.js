@@ -19,7 +19,7 @@ function calculate() {
     let resultRate; 
 
     // Функция, которая переводит бонус из процентов в рубли.
-    const calculateBonusRub = (bonusPercentage) => Math.ceil(baseRate * (bonusPercentage / 100)) // 
+    const calculateBonusRub = (bonusPercentage) => Math.round(baseRate * (bonusPercentage / 100)) // 
 
     // Функция, которая считает бонус при кол-во проведённых занятий.
     const calculateBonus = (lessons) => {
