@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <div class="content__header">
+                <h1 class="title">Бонусная система</h1>
+        </div>
+    </header>
+    <main>
+        <div class="content__main">
+            <div class="input__date">
+                <div class="content__input">
+                    <label class="label__text" for="oldLessons">Количество проведённых уроков в старом ЛК:</label>
+                    <input class="input__number" id="oldLessons" type="number" placeholder="Введите число">
+                </div>
+
+                <div class="content__input">
+                    <label class="label__text" for="newLessons">Количество проведённых занятий в новом ЛК:</label>
+                    <input class="input__number" id="newLessons" type="number" placeholder="Введите число">
+                </div>
+
+                <div class="content__input">
+                    <label class="label__text" for="baseRate">Базовая ставка репетитора по предмету:</label>
+                    <input class="input__number" id="baseRate" type="number" placeholder="Введите число">
+                </div>
+
+                <button class="submit" id="calculateBtn" onclick="calculate()">Рассчитать</button>
+            </div>
+
+            <div class="output__date">
+                <p class="text__date">Бонус, что платит система в новом ЛК: <span id="newBonus"></span></p>
+                <p class="text__date">Бонус, который необходимо платить с учётом всех ЛК:<span id="resultBonus"></span></p>
+                <p class="text__date">Итоговая ставка с учётом всех параметров:<span id="resultRate"></span></p>
+            </div>
+        </div>
+    </main>
+</body>
+<script src="js/logic.js"></script>
+</html>
