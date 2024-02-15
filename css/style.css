@@ -85,3 +85,9 @@ input::-webkit-inner-spin-button {
 .text__date span {
     font-weight: bold;
 }
+
+.attention {
+    border-bottom: 1px solid #000000;
+    padding-bottom: 15px; 
+}
+
