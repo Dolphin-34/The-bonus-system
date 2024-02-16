@@ -4,11 +4,11 @@ function calculate() {
 
     // Функция, которая считает бонус при кол-во проведённых занятий.
     const calculateBonus = (lessons) => {
-        if (lessons < 17) {
+        if (lessons < 16) {
             return 0;
-        } else if (lessons < 33) {
+        } else if (lessons < 32) {
             return 5;
-        } else if (lessons < 65) {
+        } else if (lessons < 64) {
             return 7;
         } else {
             return 10
@@ -49,38 +49,34 @@ function calculate() {
     resultRate = newRate - newBonusRub;
 
     // Cчитаем, при каком кол-во занятий в новом ЛК нужно сменить ставку и будущю ставку
-    const nextBonusThresholds = [16, 32, 64];
-    const bonusPercentages = [5, 7, 10];
-    let nextAllLessons = allLessons;
-    let nextNewLessons = newLessons;
-    let nextRate;
 
-    for (i = 0; i < nextBonusThresholds.length; i++) {
-        const thresholds = nextBonusThresholds[i];
-        let nextBaseRate
+    let steps = [16, 32, 64]; // Этапы бонусов.
+    let bonuses = [5, 7, 10];
+    let nextStep = steps.find(s => allLessons < s) || 64;
+    let nextDelta = nextStep - allLessons;
+    let nextNewStep = steps.find(s => newLessons < s) || 64;
+    let nextNewDelta = nextNewStep - newLessons;
 
-        while (nextAllLessons < thresholds) {
-            nextNewLessons++;
-            nextAllLessons = oldLessons + nextNewLessons;
-        }
-
-        if (nextAllLessons === thresholds) {
-            const nextBonusPercentage = bonusPercentages[i];
-            const nextBonusRub = calculateBonusRub(nextBonusPercentage);
-            nextBaseRate = baseRate + nextBonusRub;
-            nextRate = nextBaseRate - newBonusRub;
-            break;
-        }
-        
-        if (nextAllLessons >= nextBonusThresholds[nextBonusThresholds.length - 1]) {
-            nextNewLessons = 64;
-        }
-
-        if (!nextRate) {
-            nextRate = baseRate;
-        }
+    // Подсчитаем уроки, что будут в новом и старом ЛК.
+    let nextNewLessons = nextStep - oldLessons;
+    if (nextNewDelta < 0) { 
+        nextNewLessons = nextNewStep;
+    } else if (nextDelta < 0) {
+        nextNewLessons = nextNewStep;
+    } else if (nextDelta > nextNewDelta) {
+        nextNewLessons = nextNewStep;    //
     }
-
+    
+    let nextAllLessons = oldLessons + nextNewLessons;
+    
+    // Рассчитаем бонусы и ставку.
+    let nextBonus = calculateBonus(nextAllLessons+1);
+    let nextBonusRub = calculateBonusRub(nextBonus);
+    let nextNewBonus = calculateBonus(nextNewLessons+1);
+    let nextNewBonusRub = calculateBonusRub(nextNewBonus);
+    // let nextRate = baseRate + Math.abs(nextBonusRub - nextNewBonusRub);
+    let nextRate = nextNewLessons >= 64 ? baseRate : baseRate + Math.abs(nextBonusRub - nextNewBonusRub);
+ 
     document.getElementById('allLessons').innerText = ` ${allLessons}`;
     document.getElementById('newBonus').innerText = ` ${newBonus}%`;
     document.getElementById('resultBonus').innerText = ` ${resultBonus}%`;
