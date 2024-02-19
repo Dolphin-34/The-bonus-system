@@ -52,9 +52,9 @@ function calculate() {
 
     let steps = [16, 32, 64]; // Этапы бонусов.
     let bonuses = [5, 7, 10];
-    let nextStep = steps.find(s => allLessons < s) || 64;
+    let nextStep = steps.find(s => allLessons < s) || 100;
     let nextDelta = nextStep - allLessons;
-    let nextNewStep = steps.find(s => newLessons < s) || 64;
+    let nextNewStep = steps.find(s => newLessons < s) || 100;
     let nextNewDelta = nextNewStep - newLessons;
 
     // Подсчитаем уроки, что будут в новом и старом ЛК.
@@ -78,8 +78,8 @@ function calculate() {
     let nextRate = nextNewLessons >= 64 ? baseRate : baseRate + Math.abs(nextBonusRub - nextNewBonusRub);
  
     document.getElementById('allLessons').innerText = ` ${allLessons}`;
-    document.getElementById('newBonus').innerText = ` ${newBonus}%`;
-    document.getElementById('resultBonus').innerText = ` ${resultBonus}%`;
+    document.getElementById('newBonus').innerText = ` ${newBonus}% (${newBonusRub} руб.)`;
+    document.getElementById('resultBonus').innerText = ` ${resultBonus}% (${resultBonusRub} руб.)`;
     document.getElementById('newRate').innerText = ` ${newRate} руб.`;
     document.getElementById('resultRate').innerText = ` ${resultRate} руб.`;
     document.getElementById('nextNewLessons').innerText = ` ${nextNewLessons}`;
