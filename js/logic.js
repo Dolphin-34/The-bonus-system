@@ -59,14 +59,21 @@ function calculate() {
 
     // Подсчитаем уроки, что будут в новом и старом ЛК.
     let nextNewLessons = nextStep - oldLessons;
-    if (nextNewDelta < 0) { 
-        nextNewLessons = nextNewStep;
-    } else if (nextDelta < 0) {
-        nextNewLessons = nextNewStep;
-    } else if (nextDelta > nextNewDelta) {
-        nextNewLessons = nextNewStep;    //
+    let nextRate;
+
+    if (allLessons >= 64) {
+        nextNewLessons = 64;
+        nextRate = baseRate;
+    } else {
+        nextNewLessons = nextStep - oldLessons;
+        if (nextNewDelta < 0) { 
+            nextNewLessons = nextNewStep;
+        } else if (nextDelta < 0) {
+            nextNewLessons = nextNewStep;
+        } else if (nextDelta > nextNewDelta) {
+            nextNewLessons = nextNewStep;    //
+        }
     }
-    
     let nextAllLessons = oldLessons + nextNewLessons;
     
     // Рассчитаем бонусы и ставку.
@@ -75,7 +82,7 @@ function calculate() {
     let nextNewBonus = calculateBonus(nextNewLessons+1);
     let nextNewBonusRub = calculateBonusRub(nextNewBonus);
     // let nextRate = baseRate + Math.abs(nextBonusRub - nextNewBonusRub);
-    let nextRate = nextNewLessons >= 64 ? baseRate : baseRate + Math.abs(nextBonusRub - nextNewBonusRub);
+    nextRate = nextNewLessons >= 64 ? baseRate : baseRate + Math.abs(nextBonusRub - nextNewBonusRub);
  
     document.getElementById('allLessons').innerText = ` ${allLessons}`;
     document.getElementById('newBonus').innerText = ` ${newBonus}% (${newBonusRub} руб.)`;
